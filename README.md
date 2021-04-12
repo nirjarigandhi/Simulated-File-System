@@ -3,7 +3,7 @@ Created a simulated file system which had the features to create a file, delete 
 
 **Assignment 1: C and File Systems**
 
-    Introduction
+**Introduction:**
     
     Your task in this assignment is to implement a simulated file system. The simulated file system (simfs) is stored in a single Unix file. There is only one directory in this file system, and there are limits on the number of files (MAXFILES) it can store and the amount of space (MAXBLOCKS) it can occupy. The key file system structures are already defined; your job is to add functions: the ability to create a file, delete a file, write to a file, and read from a file.
 
