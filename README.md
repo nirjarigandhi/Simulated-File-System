@@ -1,4 +1,4 @@
-# Simulated-File-System
+# Simulated-File-System: C and File System
 Created a simulated file system which had the features to create a file, delete a file, write into a file and read from a file.
 
 **Assignment 1: C and File Systems**
