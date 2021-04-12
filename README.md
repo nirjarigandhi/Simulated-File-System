@@ -11,7 +11,8 @@ Created a simulated file system which had the features to create a file, delete 
 
     Please read the next section, about the simfs structure, very carefully. The specification for the file system is necessarily detailed, and for your program to work with simfs-formatted files, it'll need to conform precisely to the spec.
 
-    simfs structure
+**simfs structure:**
+
     simfs should be thought of as an array of blocks. Each block is a contiguous chunk of BLOCKSIZE bytes. Metadata (described below) is stored at the beginning of the file in the first (or first few) blocks. The simulated file system, simfs, contains two types of metadata: file entries (fentries) and file nodes (fnodes).
 
 **A fentry contains:**
@@ -53,15 +54,15 @@ You'll do the majority of your work here. The file already contains two helper f
 **Your Task:**
 You will write functions to implement the operations below. These operations should work for any positive, valid values of BLOCKSIZE, MAXFILES, or MAXBLOCKS. (Valid values will not cause the short values in the structs to overflow.)
 
-**Creating a file (createfile): **
+**Creating a file (createfile):**
 
 The createfile command takes a single argument: a simulated file name. It will create an empty file of that name on the file system if it is possible to do so, using the first available fentry. If there are not enough resources on the file system, an error should be emitted.
 
-**Deleting a file (deletefile): **
+**Deleting a file (deletefile):**
 
 The deletefile command also takes a single argument: a simulated file name. It should remove the file from the file system, including freeing any blocks used to store the file. To avoid malicious use of old data, your operation should overwrite the file data with zeroes.
 
-**Reading a file (readfile): **
+**Reading a file (readfile):**
 
 The readfile command takes 3 arguments:
 
@@ -73,7 +74,8 @@ The readfile command takes 3 arguments:
 
 When this command is received, the file system will print the requested data to stdout. If any part of the request cannot be completed, an error should be emitted to stderr; for example, if the start position is larger than size of the file. (In the case of an error, we don't care what, if anything, is emitted to stdout.)
 
-**Writing a file (writefile): **
+**Writing a file (writefile):**
+
 The writefile command takes 3 arguments:
 
     1. file name: The name of the simulated file to write to
