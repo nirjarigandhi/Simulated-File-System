@@ -3,8 +3,6 @@ Created a simulated file system which had the features to create a file, delete 
 
 **Assignment 1: C and File Systems**
 
-    Due: 10 p.m. on Friday, February 19, 2021 (submit to your MarkUs git repository). Since this tutorial will be marked by automated scripts, please ensure that you follow the submission instructions exactly, including the required file names and directory structure.
-
     Introduction
     Your task in this assignment is to implement a simulated file system. The simulated file system (simfs) is stored in a single Unix file. There is only one directory in this file system, and there are limits on the number of files (MAXFILES) it can store and the amount of space (MAXBLOCKS) it can occupy. The key file system structures are already defined; your job is to add functions: the ability to create a file, delete a file, write to a file, and read from a file.
 
@@ -28,57 +26,58 @@ Created a simulated file system which had the features to create a file, delete 
 
 The following subsections describe the contents of the provided files.
 
-    Makefile
-    The file for building the program. The makefile is structured so that only the files that are changed need to be recompiled. Please do not modify this file; your code should compile with the flags specified.
+```Makefile```
+The file for building the program. The makefile is structured so that only the files that are changed need to be recompiled. Please do not modify this file; your code should compile with the flags specified.
 
-    simfstypes.h
-    Contains the type definitions for the metadata structures that locate files in the file system and defines file system parameters, such as MAXFILES.
+```simfstypes.h```
+Contains the type definitions for the metadata structures that locate files in the file system and defines file system parameters, such as MAXFILES.
 
-    You will probably want to change the constants to smaller values when you are developing your program. It will make it easier to see the results. Later, you may want to increase the values in order to test more complex operations. However, none of your changes will affect our testing; we will replace this file with our own when we test. As a result, you should not commit any changes to this file; your code should work with the original version.
+```simfs.h```
+Contains function prototypes that are shared among the files. You are welcome to add more prototypes as you add or refactor code.
 
-    simfs.h
-    Contains function prototypes that are shared among the files. You are welcome to add more prototypes as you add or refactor code.
+```simfs.c```
+The main program. The main function parses the arguments, and calls the functions for the appropriate commands. You will need to modify the switch statement as you add new commands.
 
-    simfs.c
-    The main program. The main function parses the arguments, and calls the functions for the appropriate commands. You will need to modify the switch statement as you add new commands.
+```initfs.c```
+Contains the initfs function that initializes the file system structure in the file specified by the filename argument to initfs. Warning: If the file already exists, then initfs will overwrite it.
 
-    initfs.c
-    Contains the initfs function that initializes the file system structure in the file specified by the filename argument to initfs. Warning: If the file already exists, then initfs will overwrite it.
-    
-    printfs.c
-    The printfs function prints the contents of the file that stores the simulated filesystem in a readable form. This is a convenience function. You could use xxd to read the binary data, but it's more convenient to have a command to print the metadata in a human readable format.
+```printfs.c```
+The printfs function prints the contents of the file that stores the simulated filesystem in a readable form. This is a convenience function. You could use xxd to read the binary data, but it's more convenient to have a command to print the metadata in a human readable format.
 
-    simfs_ops.c
-    You'll do the majority of your work here. The file already contains two helper functions that open a file system. You should add other helper functions and functions for the four required file system operations here.
+```simfs_ops.c```
+You'll do the majority of your work here. The file already contains two helper functions that open a file system. You should add other helper functions and functions for the four required file system operations here.
 
 **Your Task:**
 You will write functions to implement the operations below. These operations should work for any positive, valid values of BLOCKSIZE, MAXFILES, or MAXBLOCKS. (Valid values will not cause the short values in the structs to overflow.)
 
 **Creating a file (createfile)**
+
 The createfile command takes a single argument: a simulated file name. It will create an empty file of that name on the file system if it is possible to do so, using the first available fentry. If there are not enough resources on the file system, an error should be emitted.
 
 **Deleting a file (deletefile)**
+
 The deletefile command also takes a single argument: a simulated file name. It should remove the file from the file system, including freeing any blocks used to store the file. To avoid malicious use of old data, your operation should overwrite the file data with zeroes.
 
 **Reading a file (readfile)**
+
 The readfile command takes 3 arguments:
 
-*file* name: The name of the simulated file to read from.
+    1. file name: The name of the simulated file to write to
 
-*start:* The offset into the file to start reading.
+    2. start: The offset into the file to start writing at.
 
-*length:* The length of the chunk of data to read.
+    3. length: The length of the chunk of data to write.
 
 When this command is received, the file system will print the requested data to stdout. If any part of the request cannot be completed, an error should be emitted to stderr; for example, if the start position is larger than size of the file. (In the case of an error, we don't care what, if anything, is emitted to stdout.)
 
 **Writing a file (writefile)**
 The writefile command takes 3 arguments:
 
-*file name:* The name of the simulated file to write to
+    1. file name: The name of the simulated file to write to
 
-*start:* The offset into the file to start writing at.
+    2. start: The offset into the file to start writing at.
 
-*length:* The length of the chunk of data to write.
+    3. length: The length of the chunk of data to write.
 
 When this command is received, the file system will write the requested data from stdin. Like the read operation, if any part of this request cannot be completed, an error should be emitted. For example, if the start position is larger than the current size of the file, an error should be emitted, since we don't know what to write in the intervening bytes. Also, if the file system doesn't have enough free blocks available for the write, then an error should be emitted.
 
